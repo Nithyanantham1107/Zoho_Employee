@@ -3,6 +3,7 @@ package com.dao;
 import com.dbconnection.DBConnection;
 import com.exception.DBConnectionException;
 import com.exception.DBOperationException;
+import com.logger.ApplicationLogger;
 import com.model.Employee;
 import com.threadlocal.EmployeeThreadLocal;
 import com.utils.EmployeeUtils;
@@ -13,8 +14,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+
 
 public class EmployeeDao {
+    private static final Logger APPLICATIONLOGGER = ApplicationLogger.getApplicationLoggerLogger();
 
 
     public static Employee authenticateEmployee(Employee emp) throws DBOperationException {
@@ -48,10 +52,14 @@ public class EmployeeDao {
 
 
         } catch (DBConnectionException e) {
+
+            APPLICATIONLOGGER.warning(ApplicationLogger.applicationLogGeneroter(e.getStackTrace()[0].getClassName(), e.getStackTrace()[0].getMethodName(), e.getClass().getName(), e.getMessage()));
+
             throw new DBOperationException("unable make Connection with Database");
 
         } catch (SQLException e) {
 
+            APPLICATIONLOGGER.warning(ApplicationLogger.applicationLogGeneroter(e.getStackTrace()[0].getClassName(), e.getStackTrace()[0].getMethodName(), e.getClass().getName(), e.getMessage()));
 
             throw new DBOperationException("Error occured while retrieving Employees ");
         }
@@ -86,9 +94,13 @@ public class EmployeeDao {
 
 
         } catch (DBConnectionException e) {
+
+            APPLICATIONLOGGER.warning(ApplicationLogger.applicationLogGeneroter(e.getStackTrace()[0].getClassName(), e.getStackTrace()[0].getMethodName(), e.getClass().getName(), e.getMessage()));
+
             throw new DBOperationException("unable make Connection with Database");
 
         } catch (SQLException e) {
+            APPLICATIONLOGGER.warning(ApplicationLogger.applicationLogGeneroter(e.getStackTrace()[0].getClassName(), e.getStackTrace()[0].getMethodName(), e.getClass().getName(), e.getMessage()));
 
 
             throw new DBOperationException("Error occured while retrieving Employees ");
@@ -125,10 +137,14 @@ public class EmployeeDao {
 
 
         } catch (DBConnectionException e) {
+
+            APPLICATIONLOGGER.warning(ApplicationLogger.applicationLogGeneroter(e.getStackTrace()[0].getClassName(), e.getStackTrace()[0].getMethodName(), e.getClass().getName(), e.getMessage()));
+
             throw new DBOperationException("unable make Connection with Database");
 
         } catch (SQLException e) {
 
+            APPLICATIONLOGGER.warning(ApplicationLogger.applicationLogGeneroter(e.getStackTrace()[0].getClassName(), e.getStackTrace()[0].getMethodName(), e.getClass().getName(), e.getMessage()));
 
             throw new DBOperationException("Error occured while retrieving Employees for the ManagerID" + empID);
         }
@@ -164,10 +180,14 @@ public class EmployeeDao {
 
 
         } catch (DBConnectionException e) {
+
+            APPLICATIONLOGGER.warning(ApplicationLogger.applicationLogGeneroter(e.getStackTrace()[0].getClassName(), e.getStackTrace()[0].getMethodName(), e.getClass().getName(), e.getMessage()));
+
             throw new DBOperationException("unable make Connection with Database");
 
         } catch (SQLException e) {
 
+            APPLICATIONLOGGER.warning(ApplicationLogger.applicationLogGeneroter(e.getStackTrace()[0].getClassName(), e.getStackTrace()[0].getMethodName(), e.getClass().getName(), e.getMessage()));
 
             throw new DBOperationException("Error occured while retrieving Employee data");
         }
@@ -196,10 +216,14 @@ public class EmployeeDao {
 
 
         } catch (DBConnectionException e) {
+
+            APPLICATIONLOGGER.warning(ApplicationLogger.applicationLogGeneroter(e.getStackTrace()[0].getClassName(), e.getStackTrace()[0].getMethodName(), e.getClass().getName(), e.getMessage()));
+
             throw new DBOperationException("unable make Connection with Database");
 
         } catch (SQLException e) {
             System.out.println("On Employee Add" + e.getMessage());
+            APPLICATIONLOGGER.warning(ApplicationLogger.applicationLogGeneroter(e.getStackTrace()[0].getClassName(), e.getStackTrace()[0].getMethodName(), e.getClass().getName(), e.getMessage()));
 
             throw new DBOperationException("Erro Occured in While inserting Employee data");
         }
@@ -217,9 +241,15 @@ public class EmployeeDao {
 
                 return result > 0;
             } catch (DBConnectionException e) {
+
+                APPLICATIONLOGGER.warning(ApplicationLogger.applicationLogGeneroter(e.getStackTrace()[0].getClassName(), e.getStackTrace()[0].getMethodName(), e.getClass().getName(), e.getMessage()));
+
                 throw new DBOperationException("unable make Connection with Database");
 
             } catch (SQLException e) {
+
+                APPLICATIONLOGGER.warning(ApplicationLogger.applicationLogGeneroter(e.getStackTrace()[0].getClassName(), e.getStackTrace()[0].getMethodName(), e.getClass().getName(), e.getMessage()));
+
                 throw new DBOperationException("Error occured while Deleting Employee data");
             }
 
@@ -246,8 +276,14 @@ public class EmployeeDao {
 
             return result > 0;
         } catch (DBConnectionException e) {
+
+            APPLICATIONLOGGER.warning(ApplicationLogger.applicationLogGeneroter(e.getStackTrace()[0].getClassName(), e.getStackTrace()[0].getMethodName(), e.getClass().getName(), e.getMessage()));
+
             throw new DBOperationException("unable make Connection with Database");
         } catch (SQLException e) {
+
+            APPLICATIONLOGGER.warning(ApplicationLogger.applicationLogGeneroter(e.getStackTrace()[0].getClassName(), e.getStackTrace()[0].getMethodName(), e.getClass().getName(), e.getMessage()));
+
             throw new DBOperationException("Erro Occured in While Updating Employee data");
         }
 
@@ -330,9 +366,13 @@ public class EmployeeDao {
 
 
         } catch (DBConnectionException e) {
+
+            APPLICATIONLOGGER.warning(ApplicationLogger.applicationLogGeneroter(e.getStackTrace()[0].getClassName(), e.getStackTrace()[0].getMethodName(), e.getClass().getName(), e.getMessage()));
+
             throw new DBOperationException("unable make Connection with Database");
 
         } catch (SQLException e) {
+            APPLICATIONLOGGER.warning(ApplicationLogger.applicationLogGeneroter(e.getStackTrace()[0].getClassName(), e.getStackTrace()[0].getMethodName(), e.getClass().getName(), e.getMessage()));
 
 
             throw new DBOperationException("Erro Occured in While setting mananger to  Employee ID" + employee.getId());

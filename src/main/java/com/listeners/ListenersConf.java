@@ -4,6 +4,8 @@ import com.dao.DBSetupDao;
 import com.dbconnection.DBConnection;
 import com.dbparser.TableParser;
 import com.exception.DBOperationException;
+import com.logger.AccessLogger;
+import com.logger.ApplicationLogger;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -30,6 +32,8 @@ public class ListenersConf {
         DBSetupDao.createTables(createQuery);
 
         DBSetupDao.addAdminUser();
+        AccessLogger.configureAccessLogger(prop.getProperty("AccessLog"));
+        ApplicationLogger.configureApplicationLogger(prop.getProperty("ApplicationLog"));
 
     }
 
@@ -40,4 +44,12 @@ public class ListenersConf {
         DBConnection.setDataSource(hikariDataSource);
 
     }
+
+//    public static void configureDB(String filePath) throws IOException {
+//
+//        HikariConfig hikariConfig = new HikariConfig(filePath);
+//        HikariDataSource hikariDataSource = new HikariDataSource(hikariConfig);
+//        DBConnection.setDataSource(hikariDataSource);
+//
+//    }
 }
