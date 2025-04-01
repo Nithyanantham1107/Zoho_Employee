@@ -57,4 +57,9 @@
 ### **Utils Folder** (Performs utility functions)
 - Converts string date data to long values.
 
+ ### **Logger Folder** (used to Log Operation performed by the Application)
+- **ApplicationLogger**:used to log DAO Operation
+- **AccessLogger**:used to log Request recieved by the Application
+  
+
 
