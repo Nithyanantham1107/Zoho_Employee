@@ -5,10 +5,7 @@ public class Role {
     private long roleID;
     private String roleName;
     private String teamName;
-    private boolean read;
-    private boolean write;
-    private boolean delete;
-    private boolean update;
+
 
     public long getRoleID() {
 
@@ -36,36 +33,5 @@ public class Role {
         this.teamName = teamName;
     }
 
-    public boolean isRead() {
-        return read;
-    }
-
-    public void setRead(boolean read) {
-        this.read = read;
-    }
-
-    public boolean isWrite() {
-        return write;
-    }
-
-    public void setWrite(boolean write) {
-        this.write = write;
-    }
-
-    public boolean isDelete() {
-        return delete;
-    }
-
-    public void setDelete(boolean delete) {
-        this.delete = delete;
-    }
-
-    public boolean isUpdate() {
-        return update;
-    }
-
-    public void setUpdate(boolean update) {
-        this.update = update;
-    }
 
 }

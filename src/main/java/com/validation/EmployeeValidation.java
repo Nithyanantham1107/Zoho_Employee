@@ -2,6 +2,9 @@ package com.validation;
 
 import com.exception.EmployeeTypeException;
 import com.model.Employee;
+import com.model.Role;
+import com.utils.tableenum.EmployeeRoleEnum;
+import com.utils.tableenum.EmployeeTeamEnum;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -24,10 +27,7 @@ public class EmployeeValidation {
         if (employee.getGender() == null || employee.getGender().isEmpty() || !isValidGender(employee.getGender())) {
             throw new EmployeeTypeException("Gender is Wrong!");
         }
-        if (employee.getRole() == null || employee.getRole().isEmpty() || !(employee.getRole().equals("developer") || employee.getRole().equals("admin") || employee.getRole().equals("manager"))) {
-            throw new EmployeeTypeException("Role type is wrong!");
-
-        }
+        employeeRoleCheck(employee.getRole());
 
         if (employee.getPassword() == null || employee.getPassword().isEmpty()) {
             throw new EmployeeTypeException("Password is empty!");
@@ -49,6 +49,23 @@ public class EmployeeValidation {
             throw new EmployeeTypeException("Dob is wrong!");
         }
 
+
+    }
+
+    public static void employeeRoleCheck(Role role) throws EmployeeTypeException {
+
+        if (role == null) {
+            throw new EmployeeTypeException("Role is Null!");
+        }
+        if (role.getTeamName().isEmpty() || !(role.getTeamName().equals(EmployeeTeamEnum.DEVELOPER.getTeam()) || role.getTeamName().equals(EmployeeTeamEnum.MANAGEMENT.getTeam()))) {
+            throw new EmployeeTypeException("Team type is wrong!");
+
+        }
+
+        if (role.getRoleName().isEmpty() || !(role.getRoleName().equals(EmployeeRoleEnum.DEVELOPER.getRole()) || role.getRoleName().equals(EmployeeRoleEnum.ADMIN.getRole()) || role.getRoleName().equals(EmployeeRoleEnum.MANAGER.getRole()))) {
+            throw new EmployeeTypeException("Role type is wrong!");
+
+        }
 
     }
 

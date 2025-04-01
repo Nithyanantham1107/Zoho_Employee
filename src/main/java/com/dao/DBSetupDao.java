@@ -5,6 +5,7 @@ import com.dbconnection.DBConnection;
 import com.exception.DBConnectionException;
 import com.exception.DBOperationException;
 import com.model.Employee;
+import com.model.Role;
 
 import java.sql.Connection;
 
@@ -44,12 +45,21 @@ public class DBSetupDao {
 
     public static void addAdminUser() throws DBOperationException {
         Employee admin = EmployeeDao.getEmployee(1);
-        if (admin == null || !admin.getRole().equals("admin")) {
+        Role role=new Role();
+        role.setTeamName("admin");
+        role.setRoleName("admin");
+        Role adminRole=RoleDao.getRoleByName(role);
 
+
+        if(adminRole==null ){
+            RoleDao.addRole(role);
+
+        }
+
+        if (admin == null || !admin.getRole().getRoleName().equals("admin")) {
             Employee employee = new Employee();
             employee.setName("admin");
             employee.setPassword("admin");
-            employee.setRole("admin");
             employee.setGender("male");
             employee.setEmail("admin@gmail.com");
             employee.setSalary(20000);
@@ -58,6 +68,8 @@ public class DBSetupDao {
             employee.setPlace("chennai");
             employee.setManagerID(0);
             employee.setDob("11/07/2003");
+
+            employee.setRole(role);
             EmployeeDao.addEmployee(employee);
         }
 

@@ -1,0 +1,135 @@
+{
+  "tables": [
+    {
+      "name": "Role",
+      "description": "Stores Employee Role in a Team",
+      "columns": [
+        {
+          "name": "roleID",
+          "type": "auto",
+          "primarykey": true
+        },
+        {
+          "name": "roleName",
+          "type": "varchar",
+          "length": 100
+        },
+        {
+          "name": "teamName",
+          "type": "varchar",
+          "length": 100
+        }
+      ]
+    },
+    {
+      "name": "Employee",
+      "description": "Stores Employee data",
+      "columns": [
+        {
+          "name": "empID",
+          "type": "auto",
+          "primarykey": true
+        },
+        {
+          "name": "name",
+          "type": "varchar",
+          "length": 150
+        },
+        {
+          "name": "role",
+          "type": "long",
+          "foreignkey": {
+            "references": "Role",
+            "column": "RoleID",
+            "constraint": {
+              "condition": "delete",
+              "action": "null"
+            }
+          }
+        },
+        {
+          "name": "gender",
+          "type": "varchar",
+          "length": 7
+        },
+        {
+          "name": "salary",
+          "type": "int"
+        },
+        {
+          "name": "accountNo",
+          "type": "varchar",
+          "length": 40
+        },
+        {
+          "name": "email",
+          "type": "varchar",
+          "length": 100,
+          "unique": true
+        },
+        {
+          "name": "password",
+          "type": "varchar",
+          "length": 100
+        },
+        {
+          "name": "phoneNo",
+          "type": "varchar",
+          "length": 15
+        },
+        {
+          "name": "dob",
+          "type": "long"
+        },
+        {
+          "name": "place",
+          "type": "varchar",
+          "length": 100
+        },
+        {
+          "name": "managerID",
+          "type": "long",
+          "foreignkey": {
+            "references": "Employee",
+            "column": "empID",
+            "constraint": {
+              "condition": "delete",
+              "action": "null"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payroll",
+      "description": "Stores Employee Monthly Salary",
+      "columns": [
+        {
+          "name": "payrollID",
+          "type": "auto",
+          "primarykey": true
+        },
+        {
+          "name": "date",
+          "type": "long"
+        },
+        {
+          "name": "payrollSalary",
+          "type": "int"
+        },
+        {
+          "name": "empID",
+          "type": "long",
+          "foreignkey": {
+            "references": "Employee",
+            "column": "empID",
+            "constraint": {
+              "condition": "delete",
+              "action": "cascade"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

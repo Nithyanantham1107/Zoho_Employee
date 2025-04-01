@@ -4,9 +4,9 @@ package com.model;
 public class Employee {
 
 
-    private Long id;
+    private Long empID;
     private String name;
-    private String role;
+    private Role role;
     private String gender;
     private int salary;
     private String accountNo;
@@ -19,16 +19,16 @@ public class Employee {
     private Long managerID;
 
 
-    public void setId(long id) {
+    public void setEmpID(long empID) {
 
-        this.id = id;
+        this.empID = empID;
     }
 
     public void setName(String Name) {
         this.name = Name;
     }
 
-    public void setRole(String Role) {
+    public void setRole(Role Role) {
         this.role = Role;
     }
 
@@ -69,15 +69,15 @@ public class Employee {
         this.managerID = managerID;
     }
 
-    public long getId() {
-        return id;
+    public long getEmpID() {
+        return empID;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 

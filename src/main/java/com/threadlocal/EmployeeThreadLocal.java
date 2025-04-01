@@ -3,7 +3,7 @@ package com.threadlocal;
 import com.model.Employee;
 
 public class EmployeeThreadLocal {
-    private static final ThreadLocal<Employee> employeeThreadLocal = new ThreadLocal<>();
+    private static  ThreadLocal<Employee> employeeThreadLocal = new ThreadLocal<>();
 
     public  static void setEmployeeThreadLocal(Employee employee) {
         employeeThreadLocal.set(employee);
@@ -13,6 +13,7 @@ public class EmployeeThreadLocal {
     }
 
     public static void clear() {
+
 
         employeeThreadLocal.remove();
     }

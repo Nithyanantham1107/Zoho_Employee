@@ -10,10 +10,10 @@ public class EmployeeCache {
     private static final Map<Long, Employee> employeeCache = new ConcurrentHashMap<>();
     public static void putEmployee(String token, Employee emp) {
 
-        if (!employeeCache.containsKey(emp.getId())) {
-            employeeCache.put(emp.getId(), emp);
+        if (!employeeCache.containsKey(emp.getEmpID())) {
+            employeeCache.put(emp.getEmpID(), emp);
         }
-        employeeTokenMapper.put(token, emp.getId());
+        employeeTokenMapper.put(token, emp.getEmpID());
 
 
     }

@@ -6,6 +6,7 @@ import com.exception.UnauthorizedAccesException;
 import com.model.Employee;
 import com.threadlocal.EmployeeThreadLocal;
 import com.utils.EmployeeUtils;
+import com.utils.tableenum.EmployeeRoleEnum;
 
 import javax.annotation.Priority;
 import javax.ws.rs.Priorities;
@@ -21,17 +22,13 @@ import javax.ws.rs.ext.Provider;
 public class AdminAndManagerFilter implements ContainerRequestFilter {
 
     public void filter(ContainerRequestContext requestContext) {
-
         StringBuilder message = new StringBuilder("{ \"message\": \"");
-
         try {
             Employee employee = EmployeeThreadLocal.getEmployeeThreadLocal();
-            String adminRole = "admin";
-            String managerRole = "manager";
             System.out.println("Admin and Manager role Check");
-            Boolean isValidRole = EmployeeUtils.employeeRoleCheck(employee, adminRole) || EmployeeUtils.employeeRoleCheck(employee, managerRole);
+            boolean isValidRole = EmployeeUtils.employeeRoleCheck(employee, EmployeeRoleEnum.ADMIN.getRole()) || EmployeeUtils.employeeRoleCheck(employee, EmployeeRoleEnum.MANAGER.getRole());
             if (!isValidRole) {
-                throw new UnauthorizedAccesException(employee.getRole() + "  can't access this endpoint");
+                throw new UnauthorizedAccesException(employee.getRole().getRoleName() + "  can't access this endpoint");
             }
         } catch (UnauthorizedAccesException e) {
             message.append(e.getMessage()).append("\"} ");

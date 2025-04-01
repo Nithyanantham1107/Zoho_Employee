@@ -2,6 +2,7 @@
   "tables": [
     {
       "name": "Role",
+      "description": "Stores Employee Role",
       "columns": [
         {
           "name": "ID",

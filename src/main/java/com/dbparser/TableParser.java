@@ -1,8 +1,6 @@
 package com.dbparser;
 
-import com.dbparser.schema.Column;
-import com.dbparser.schema.DataBaseSchema;
-import com.dbparser.schema.Table;
+import com.dbparser.schema.*;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
@@ -19,19 +17,12 @@ public class TableParser {
         System.out.println("TableParser" + filePath);
         List<String> tables = new ArrayList<>();
         Gson gson = new Gson();
-
-
         JsonReader reader = new JsonReader(new FileReader(filePath));
-
-
         DataBaseSchema schema = gson.fromJson(reader, DataBaseSchema.class);
-
         System.out.println("Tables found: " + schema.getTables().size());
         for (Table table : schema.getTables()) {
             System.out.println("Table: " + table.getName());
-
             tables.add(createTableQuery(table));
-
         }
         return tables;
 
@@ -58,6 +49,12 @@ public class TableParser {
             if (columns.get(i).getForeignkey() != null) {
                 foreignKeys.append(",\n  FOREIGN KEY (").append(columns.get(i).getName()).append(") REFERENCES ")
                         .append(columns.get(i).getForeignkey().getReferences()).append("(").append(columns.get(i).getForeignkey().getColumn()).append(")");
+
+
+                if (columns.get(i).getForeignkey().getConstraint() != null) {
+                    String constraints = " ON " + columns.get(i).getForeignkey().getConstraint().getCondition().toUpperCase() + "  " + foriegnKeyAction(columns.get(i).getForeignkey().getConstraint());
+                    foreignKeys.append(constraints);
+                }
             }
 
             query.append("  ").append(columnDef);
@@ -68,6 +65,7 @@ public class TableParser {
 
         if (primaryKey != null) {
             query.append(",\n  PRIMARY KEY (").append(primaryKey).append(")");
+
         }
 //        System.out.println("foreign keys: " + foreignKeys.toString());
         if (!foreignKeys.toString().isEmpty()) {
@@ -91,10 +89,25 @@ public class TableParser {
             case "int":
                 return "INT";
             case "auto":
-                return "bigserial";
+                return "BIGSERIAL";
 
             default:
                 return column.getType().toUpperCase();
+        }
+    }
+
+    private static String foriegnKeyAction(Constraint constraint) {
+
+//      System.out.println("foriegnKeyAction " + constraint.getAction().toUpperCase());
+
+//      System.out.println("foriegnKey Condition " + constraint.getCondition().toUpperCase());
+        switch (constraint.getAction()) {
+            case "null":
+                return "SET NULL";
+            case "cascade":
+                return "CASCADE";
+            default:
+                return "INVALID ACTION";
         }
     }
 }

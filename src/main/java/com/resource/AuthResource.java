@@ -5,6 +5,7 @@ import com.cache.EmployeeCache;
 import com.dao.EmployeeDao;
 import com.exception.DBOperationException;
 import com.exception.EmployeeTypeException;
+import com.google.gson.JsonObject;
 import com.model.Employee;
 
 import javax.annotation.PostConstruct;
@@ -20,8 +21,11 @@ public class AuthResource {
 
     public Response logEmployee(Employee emp) throws DBOperationException, EmployeeTypeException {
         System.out.println("Logging Employee");
-        StringBuilder message = new StringBuilder("{ \"Message\":\"");
-        StringBuilder token = new StringBuilder("{ \"Token\":\"");
+//        StringBuilder message = new StringBuilder("{ \"Message\":\"");
+        JsonObject resp = new JsonObject();
+//        StringBuilder token = new StringBuilder("{ \"Token\":\"");
+        JsonObject token = new JsonObject();
+
 
         if (emp == null || emp.getPassword() == null || emp.getPassword().isEmpty() || emp.getEmail() == null || emp.getEmail().isEmpty()) {
             throw new EmployeeTypeException("Credentials is Invalid!");
@@ -32,23 +36,25 @@ public class AuthResource {
         Employee employee = EmployeeDao.authenticateEmployee(emp);
         if (employee == null) {
 
-            message.append("Employee Not Found ").append("\"}");
+//            message.append("Employee Not Found ").append("\"}");
 
+            resp.addProperty("Message", "Employee Not Found");
 
-            return Response.status(Response.Status.NOT_FOUND).entity(message.toString()).build();
+            return Response.status(Response.Status.NOT_FOUND).entity(resp.toString()).build();
         }
         if (emp.getPassword().equals(employee.getPassword())) {
             String tokenValue = UUID.randomUUID().toString() + System.currentTimeMillis();
             EmployeeCache.putEmployee(tokenValue, employee);
-            token.append(tokenValue).append("\"}");
+//            token.append(tokenValue).append("\"}");
+            token.addProperty("token", tokenValue);
             return Response.status(Response.Status.OK).entity(token.toString()).build();
 
         } else {
 
 
-            message.append("Invalid Password... Try Again").append("\"}");
-
-            return Response.status(Response.Status.UNAUTHORIZED).entity(message.toString()).build();
+//            message.append("Invalid Password... Try Again").append("\"}");
+            resp.addProperty("Message", "Invalid Password");
+            return Response.status(Response.Status.UNAUTHORIZED).entity(resp.toString()).build();
         }
 
     }
@@ -61,10 +67,13 @@ public class AuthResource {
 
         System.out.println("Logging  Out Employee");
         String token = requestHeader.getHeaderString("Authorization");
-        StringBuilder message = new StringBuilder("{ \"Message\":\"");
-        message.append("Successfully Logged Out" + "\"}");
+//        StringBuilder message = new StringBuilder("{ \"Message\":\"");
+        JsonObject resp = new JsonObject();
+
+//        message.append("Successfully Logged Out" + "\"}");
+        resp.addProperty("Message", "Successfully Logged Out");
         EmployeeCache.removeEmployee(token);
-        return Response.status(Response.Status.OK).entity(message.toString()).build();
+        return Response.status(Response.Status.OK).entity(resp.toString()).build();
 
     }
 
