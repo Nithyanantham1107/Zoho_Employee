@@ -5,15 +5,11 @@ import com.annotation.AdminAccess;
 import com.annotation.Secured;
 import com.dao.EmployeeDao;
 import com.dao.PayrollDao;
-import com.dao.RoleDao;
 import com.exception.DBOperationException;
-import com.exception.EmployeeTypeException;
+import com.exception.EmployeeDataTypeException;
 import com.google.gson.JsonObject;
 import com.logger.ApplicationLogger;
-import com.model.Employee;
 import com.model.Payroll;
-import com.model.Role;
-import com.validation.EmployeeValidation;
 import com.validation.PayrollValidation;
 
 import javax.ws.rs.*;
@@ -31,14 +27,14 @@ public class PayrollResource {
     @AdminAccess
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createRole(Payroll payroll) throws EmployeeTypeException, DBOperationException {
+    public Response createRole(Payroll payroll) throws EmployeeDataTypeException, DBOperationException {
 
 
 //        StringBuilder message = new StringBuilder("{ \"Message\":\"");
         JsonObject resp = new JsonObject();
         if (payroll == null) {
 
-            throw new EmployeeTypeException("payroll is empty!");
+            throw new EmployeeDataTypeException("payroll is empty!");
 
         }
 
@@ -58,7 +54,7 @@ public class PayrollResource {
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPayrolls(@QueryParam("empid") long empId) throws EmployeeTypeException, DBOperationException {
+    public Response getPayrolls(@QueryParam("empid") long empId) throws EmployeeDataTypeException, DBOperationException {
 
 
         System.out.println("Get employee payroll");
@@ -71,7 +67,7 @@ public class PayrollResource {
         if (EmployeeDao.employeeRoleCheck(empId)) {
             payrolls = PayrollDao.getEmployeePayroll(empId);
         } else {
-            throw new EmployeeTypeException("  Payroll for  Employee ID" + empId + " Not Accessible");
+            throw new EmployeeDataTypeException("  Payroll for  Employee ID" + empId + " Not Accessible");
 
 
         }

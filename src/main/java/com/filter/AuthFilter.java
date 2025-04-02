@@ -4,6 +4,7 @@ package com.filter;
 import com.annotation.Secured;
 import com.cache.EmployeeCache;
 import com.exception.InvalidRequestException;
+import com.google.gson.JsonObject;
 import com.logger.AccessLogger;
 import com.model.Employee;
 import com.threadlocal.EmployeeThreadLocal;
@@ -31,7 +32,8 @@ public class AuthFilter implements ContainerRequestFilter {
 
     @Override
     public void filter(ContainerRequestContext requestContext) {
-        StringBuilder message = new StringBuilder("{ \"message\": \"");
+//        StringBuilder message = new StringBuilder("{ \"message\": \"");
+        JsonObject resp = new JsonObject();
         String requestURI = requestContext.getUriInfo().getRequestUri().getPath().toString();
 
         String requestIp = request.getRemoteAddr();
@@ -51,11 +53,11 @@ public class AuthFilter implements ContainerRequestFilter {
             }
             EmployeeThreadLocal.setEmployeeThreadLocal(employee);
             ACCESSLOGGER.info(AccessLogger.accessLogGeneroter(requestURI, requestMethod, requestIp));
-
         } catch (InvalidRequestException e) {
             ACCESSLOGGER.warning(AccessLogger.accessLogGeneroter(requestURI, requestMethod, requestIp, e.getMessage()));
-            message.append(e.getMessage()).append("\"} ");
-            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).entity(message.toString()).build());
+//            message.append(e.getMessage()).append("\"} ");
+            resp.addProperty("Message",e.getMessage());
+            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).entity(resp.toString()).build());
 
 
         }

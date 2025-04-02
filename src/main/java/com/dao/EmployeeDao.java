@@ -47,7 +47,7 @@ public class EmployeeDao {
                 employee.setEmail(result.getString(EmployeeEnum.EMAIL.getColumn()));
                 employee.setPassword(result.getString(EmployeeEnum.PASSWORD.getColumn()));
                 employee.setPhoneNo(result.getString(EmployeeEnum.PHONENO.getColumn()));
-                employee.setDob(EmployeeUtils.convertEmployeeDobToString(result.getLong(EmployeeEnum.BIRTHDATE.getColumn())));
+                employee.setDob(EmployeeUtils.convertDobToString(result.getLong(EmployeeEnum.BIRTHDATE.getColumn())));
                 employee.setManagerID(result.getInt(EmployeeEnum.MANAGERID.getColumn()));
                 employee.setPlace(result.getString(EmployeeEnum.PLACE.getColumn()));
 
@@ -97,7 +97,7 @@ public class EmployeeDao {
                 employee.setEmail(result.getString(EmployeeEnum.EMAIL.getColumn()));
                 employee.setPassword(result.getString(EmployeeEnum.PASSWORD.getColumn()));
                 employee.setPhoneNo(result.getString(EmployeeEnum.PHONENO.getColumn()));
-                employee.setDob(EmployeeUtils.convertEmployeeDobToString(result.getLong(EmployeeEnum.BIRTHDATE.getColumn())));
+                employee.setDob(EmployeeUtils.convertDobToString(result.getLong(EmployeeEnum.BIRTHDATE.getColumn())));
                 employee.setManagerID(result.getInt(EmployeeEnum.MANAGERID.getColumn()));
                 employee.setPlace(result.getString(EmployeeEnum.PLACE.getColumn()));
                 Role role=new Role();
@@ -144,7 +144,7 @@ public class EmployeeDao {
                 employee.setEmail(result.getString(EmployeeEnum.EMAIL.getColumn()));
                 employee.setPassword(result.getString(EmployeeEnum.PASSWORD.getColumn()));
                 employee.setPhoneNo(result.getString(EmployeeEnum.PHONENO.getColumn()));
-                employee.setDob(EmployeeUtils.convertEmployeeDobToString(result.getLong(EmployeeEnum.BIRTHDATE.getColumn())));
+                employee.setDob(EmployeeUtils.convertDobToString(result.getLong(EmployeeEnum.BIRTHDATE.getColumn())));
                 employee.setManagerID(result.getInt(EmployeeEnum.MANAGERID.getColumn()));
                 employee.setPlace(result.getString(EmployeeEnum.PLACE.getColumn()));
                 Role role = new Role();
@@ -191,7 +191,7 @@ public class EmployeeDao {
                 employee.setEmail(result.getString(EmployeeEnum.EMAIL.getColumn()));
                 employee.setPassword(result.getString(EmployeeEnum.PASSWORD.getColumn()));
                 employee.setPhoneNo(result.getString(EmployeeEnum.PHONENO.getColumn()));
-                employee.setDob(EmployeeUtils.convertEmployeeDobToString(result.getLong(EmployeeEnum.BIRTHDATE.getColumn())));
+                employee.setDob(EmployeeUtils.convertDobToString(result.getLong(EmployeeEnum.BIRTHDATE.getColumn())));
                 employee.setManagerID(result.getInt(EmployeeEnum.MANAGERID.getColumn()));
                 employee.setPlace(result.getString(EmployeeEnum.PLACE.getColumn()));
                 Role role = new Role();
@@ -248,7 +248,7 @@ public class EmployeeDao {
             ps.setString(6, employee.getEmail());
             ps.setString(7, employee.getPassword());
             ps.setString(8, employee.getPhoneNo());
-            ps.setLong(9, EmployeeUtils.convertEmployeeDobToLong(employee.getDob()));
+            ps.setLong(9, EmployeeUtils.convertDobToLong(employee.getDob()));
             ps.setString(10, employee.getPlace());
             int result = ps.executeUpdate();
 
@@ -319,7 +319,7 @@ System.out.println("here the Employee Update Query is"+query);
             ps.setString(5, employee.getEmail());
             ps.setString(6, employee.getPassword());
             ps.setString(7, employee.getPhoneNo());
-            ps.setLong(8, EmployeeUtils.convertEmployeeDobToLong(employee.getDob()));
+            ps.setLong(8, EmployeeUtils.convertDobToLong(employee.getDob()));
             ps.setString(9, employee.getPlace());
             ps.setLong(10, employee.getRole().getRoleID());
             ps.setLong(11, employee.getEmpID());

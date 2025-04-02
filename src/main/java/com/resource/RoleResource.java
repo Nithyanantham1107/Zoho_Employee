@@ -2,10 +2,9 @@ package com.resource;
 
 import com.annotation.AdminAccess;
 import com.annotation.Secured;
-import com.dao.EmployeeDao;
 import com.dao.RoleDao;
 import com.exception.DBOperationException;
-import com.exception.EmployeeTypeException;
+import com.exception.EmployeeDataTypeException;
 import com.google.gson.JsonObject;
 import com.logger.ApplicationLogger;
 import com.model.Role;
@@ -27,14 +26,14 @@ public class RoleResource {
     @AdminAccess
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createRole(Role role) throws EmployeeTypeException, DBOperationException {
+    public Response createRole(Role role) throws EmployeeDataTypeException, DBOperationException {
 
 
 //        StringBuilder message = new StringBuilder("{ \"Message\":\"");
         JsonObject resp = new JsonObject();
         if (role == null) {
 
-            throw new EmployeeTypeException("Role is empty!");
+            throw new EmployeeDataTypeException("Role is empty!");
 
         }
 

@@ -3,13 +3,14 @@ package com.model;
 public class Payroll {
 
     private long payRollID;
-    private String date;
+    private String fromDate;
+    private String toDate;
     private int payrollSalary;
     private long empID;
 
 
-    public String getDate() {
-        return date;
+    public String getFromDate() {
+        return fromDate;
     }
 
     public int getPayrollSalary() {
@@ -29,9 +30,9 @@ public class Payroll {
         return payRollID;
     }
 
-    public void setDate(String date) {
+    public void setFromDate(String fromDate) {
 
-        this.date = date;
+        this.fromDate = fromDate;
     }
 
     public void setPayrollSalary(int payrollSalary) {
@@ -40,6 +41,13 @@ public class Payroll {
 
     public void setEmpID(long empID) {
         this.empID = empID;
+    }
+
+    public String getToDate() {
+        return toDate;
+    }
+    public void setToDate(String toDate) {
+        this.toDate = toDate;
     }
 
 }

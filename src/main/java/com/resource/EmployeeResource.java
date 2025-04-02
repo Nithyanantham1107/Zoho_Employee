@@ -6,7 +6,7 @@ import com.annotation.Secured;
 import com.dao.EmployeeDao;
 import com.dao.RoleDao;
 import com.exception.DBOperationException;
-import com.exception.EmployeeTypeException;
+import com.exception.EmployeeDataTypeException;
 import com.google.gson.JsonObject;
 import com.logger.ApplicationLogger;
 import com.model.Employee;
@@ -36,7 +36,7 @@ public class EmployeeResource {
 
         JsonObject resp = new JsonObject();
         List<Employee> employees = EmployeeDao.getAllEmployee();
-        if (employees == null || employees.size() == 0) {
+        if (employees.isEmpty()) {
 
 //            message.append("Employee DB is Empty ").append("\"}");
 
@@ -56,7 +56,7 @@ public class EmployeeResource {
     @AdminAndManagerAccess
     @Path("/manager/all")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllEmployeeUnderManager(@QueryParam("empid") String empid) throws EmployeeTypeException, DBOperationException {
+    public Response getAllEmployeeUnderManager(@QueryParam("empid") String empid) throws EmployeeDataTypeException, DBOperationException {
         System.out.println("Get All employee");
 
 //        StringBuilder message = new StringBuilder("{ \"Message\":\"");
@@ -64,7 +64,7 @@ public class EmployeeResource {
         JsonObject resp = new JsonObject();
 
         if (empid == null || empid.isEmpty()) {
-            throw new EmployeeTypeException("Empid is  empty");
+            throw new EmployeeDataTypeException("Empid is  empty");
 
         }
         long empId = Long.parseLong(empid);
@@ -89,7 +89,7 @@ public class EmployeeResource {
     @GET
 
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getEmployee(@QueryParam("empid") String empid) throws EmployeeTypeException, DBOperationException {
+    public Response getEmployee(@QueryParam("empid") String empid) throws EmployeeDataTypeException, DBOperationException {
         System.out.println("Get employee");
 
 //        StringBuilder message = new StringBuilder("{ \"Message\":\"");
@@ -98,14 +98,14 @@ public class EmployeeResource {
 
         Employee employee;
         if (empid == null || empid.isEmpty()) {
-            throw new EmployeeTypeException("Empid is  empty");
+            throw new EmployeeDataTypeException("Empid is  empty");
 
         }
         long empId = Long.parseLong(empid);
         if (EmployeeDao.employeeRoleCheck(empId)) {
             employee = EmployeeDao.getEmployee(empId);
         } else {
-            throw new EmployeeTypeException("Employee ID" + empid + " Not Accessible");
+            throw new EmployeeDataTypeException("Employee ID" + empid + " Not Accessible");
 
 
         }
@@ -131,12 +131,12 @@ public class EmployeeResource {
     @AdminAccess
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addEmployee(Employee employee) throws EmployeeTypeException, DBOperationException {
+    public Response addEmployee(Employee employee) throws EmployeeDataTypeException, DBOperationException {
 //        StringBuilder message = new StringBuilder("{ \"Message\":\"");
         JsonObject resp = new JsonObject();
         if (employee == null) {
 
-            throw new EmployeeTypeException("Employee is empty!");
+            throw new EmployeeDataTypeException("Employee is empty!");
 
         }
 
@@ -167,18 +167,24 @@ public class EmployeeResource {
         return new PayrollResource();
     }
 
+    @Path("/attendence")
+    public AttendenceResource attendenceResource() {
+        System.out.println("Get Attendence");
+        return new AttendenceResource();
+    }
+
 
     @DELETE
     @AdminAccess
     @Path("/{empid}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteEmployee(@PathParam("empid") String empid) throws EmployeeTypeException, DBOperationException {
+    public Response deleteEmployee(@PathParam("empid") String empid) throws EmployeeDataTypeException, DBOperationException {
 
         System.out.println("Get employee");
 //        StringBuilder message = new StringBuilder("{ \"Message\":\"");
         JsonObject resp = new JsonObject();
         if (empid == null || empid.isEmpty()) {
-            throw new EmployeeTypeException("Empid is  empty");
+            throw new EmployeeDataTypeException("Empid is  empty");
 
         }
         long empId = Long.parseLong(empid);
@@ -206,12 +212,12 @@ public class EmployeeResource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateEmployee(Employee employee) throws EmployeeTypeException, DBOperationException {
+    public Response updateEmployee(Employee employee) throws EmployeeDataTypeException, DBOperationException {
 //        StringBuilder message = new StringBuilder("{ \"Message\":\"");
         JsonObject resp = new JsonObject();
         if (employee == null) {
 
-            throw new EmployeeTypeException("Employee is empty!");
+            throw new EmployeeDataTypeException("Employee is empty!");
 
         }
 
@@ -252,12 +258,12 @@ public class EmployeeResource {
     @Path("admin/manager/set")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response setManager(Employee employee) throws EmployeeTypeException, DBOperationException {
+    public Response setManager(Employee employee) throws EmployeeDataTypeException, DBOperationException {
 //        StringBuilder message = new StringBuilder("{ \"Message\":\"");
         JsonObject resp = new JsonObject();
         if (employee == null || employee.getEmpID() < 0 || employee.getManagerID() < 0) {
 
-            throw new EmployeeTypeException("Employee is empty!");
+            throw new EmployeeDataTypeException("Employee is empty!");
 
         }
 

@@ -3,7 +3,7 @@ package com.utils.tableenum;
 public enum PayrollEnum {
 
 
-   PAYROLLID("payrollID"),DATE("date"),PAYROLLSALARY(("payrollSalary")),EMPID("empID");
+   PAYROLLID("payrollID"),FROMDATE("fromdate"),TODATE("todate"),PAYROLLSALARY(("payrollSalary")),EMPID("empID");
 
     private String column;
 

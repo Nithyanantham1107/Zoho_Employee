@@ -3,6 +3,7 @@ package com.filter;
 import com.annotation.AdminAccess;
 import com.annotation.AdminAndManagerAccess;
 import com.exception.UnauthorizedAccesException;
+import com.google.gson.JsonObject;
 import com.model.Employee;
 import com.threadlocal.EmployeeThreadLocal;
 import com.utils.EmployeeUtils;
@@ -22,7 +23,8 @@ import javax.ws.rs.ext.Provider;
 public class AdminAndManagerFilter implements ContainerRequestFilter {
 
     public void filter(ContainerRequestContext requestContext) {
-        StringBuilder message = new StringBuilder("{ \"message\": \"");
+//        StringBuilder message = new StringBuilder("{ \"message\": \"");
+        JsonObject resp=new JsonObject();
         try {
             Employee employee = EmployeeThreadLocal.getEmployeeThreadLocal();
             System.out.println("Admin and Manager role Check");
@@ -31,8 +33,9 @@ public class AdminAndManagerFilter implements ContainerRequestFilter {
                 throw new UnauthorizedAccesException(employee.getRole().getRoleName() + "  can't access this endpoint");
             }
         } catch (UnauthorizedAccesException e) {
-            message.append(e.getMessage()).append("\"} ");
-            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).entity(message.toString()).build());
+//            message.append(e.getMessage()).append("\"} ");
+            resp.addProperty("Message",e.getMessage());
+            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).entity(resp.toString()).build());
 
         }
     }

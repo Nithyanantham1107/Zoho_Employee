@@ -1,22 +1,22 @@
 package com.validation;
 
-import com.exception.EmployeeTypeException;
+import com.exception.EmployeeDataTypeException;
 import com.model.Payroll;
 
 public class PayrollValidation {
-    public static void employeeCheck(Payroll payroll) throws EmployeeTypeException {
+    public static void employeeCheck(Payroll payroll) throws EmployeeDataTypeException {
 
 
-        if (payroll.getDate() == null || payroll.getDate().isEmpty()) {
+        if (payroll.getFromDate() == null || payroll.getFromDate().isEmpty()) {
 
-            throw new EmployeeTypeException("Date is empty!");
+            throw new EmployeeDataTypeException(" from Date is empty!");
+        }
+        if (payroll.getToDate() == null || payroll.getToDate().isEmpty()) {
+            throw new EmployeeDataTypeException("Date is empty!");
         }
 
-        if (payroll.getPayrollSalary() < 0) {
-            throw new EmployeeTypeException("Salary is negative!");
-        }
         if (payroll.getEmpID() < 0) {
-            throw new EmployeeTypeException("Ivalid EmployeeID!");
+            throw new EmployeeDataTypeException("Ivalid EmployeeID!");
         }
 
 

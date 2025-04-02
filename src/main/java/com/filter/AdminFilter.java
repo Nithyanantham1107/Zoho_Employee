@@ -2,6 +2,7 @@ package com.filter;
 
 import com.annotation.AdminAccess;
 import com.exception.UnauthorizedAccesException;
+import com.google.gson.JsonObject;
 import com.model.Employee;
 import com.threadlocal.EmployeeThreadLocal;
 import com.utils.EmployeeUtils;
@@ -20,7 +21,9 @@ import javax.ws.rs.ext.Provider;
 public class AdminFilter implements ContainerRequestFilter {
     @Override
     public void filter(ContainerRequestContext requestContext)  {
-        StringBuilder message = new StringBuilder("{ \"message\": \"");
+//        StringBuilder message = new StringBuilder("{ \"message\": \"");
+
+        JsonObject resp = new JsonObject();
         try {
             Employee employee=EmployeeThreadLocal.getEmployeeThreadLocal();
             System.out.println("heer teh data is"+employee);
@@ -32,8 +35,8 @@ public class AdminFilter implements ContainerRequestFilter {
             }
 
         } catch (UnauthorizedAccesException e) {
-            message.append(e.getMessage()).append("\"} ");
-            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).entity(message.toString()).build());
+//            message.append(e.getMessage()).append("\"} ");
+            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).entity(resp.toString()).build());
 
 
 

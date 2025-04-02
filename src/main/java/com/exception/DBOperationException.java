@@ -1,8 +1,6 @@
 package com.exception;
 
 public class DBOperationException extends Throwable {
-
-
     public DBOperationException(String message) {
         super(message);
     }

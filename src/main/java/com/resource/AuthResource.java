@@ -4,11 +4,10 @@ import com.annotation.Secured;
 import com.cache.EmployeeCache;
 import com.dao.EmployeeDao;
 import com.exception.DBOperationException;
-import com.exception.EmployeeTypeException;
+import com.exception.EmployeeDataTypeException;
 import com.google.gson.JsonObject;
 import com.model.Employee;
 
-import javax.annotation.PostConstruct;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.util.UUID;
@@ -19,7 +18,7 @@ public class AuthResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 
-    public Response logEmployee(Employee emp) throws DBOperationException, EmployeeTypeException {
+    public Response logEmployee(Employee emp) throws DBOperationException, EmployeeDataTypeException {
         System.out.println("Logging Employee");
 //        StringBuilder message = new StringBuilder("{ \"Message\":\"");
         JsonObject resp = new JsonObject();
@@ -28,7 +27,7 @@ public class AuthResource {
 
 
         if (emp == null || emp.getPassword() == null || emp.getPassword().isEmpty() || emp.getEmail() == null || emp.getEmail().isEmpty()) {
-            throw new EmployeeTypeException("Credentials is Invalid!");
+            throw new EmployeeDataTypeException("Credentials is Invalid!");
 
         }
 

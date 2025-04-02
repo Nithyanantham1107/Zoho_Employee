@@ -2,31 +2,31 @@
   "tables": [
     {
       "name": "Role",
-      "description": "Stores Employee Role",
+      "description": "Stores Employee Role in a Team",
       "columns": [
         {
-          "name": "ID",
-          "type": "int",
+          "name": "roleID",
+          "type": "auto",
           "primarykey": true
         },
         {
-          "name": "RoleName",
+          "name": "roleName",
           "type": "varchar",
-          "length": 50
+          "length": 100
         },
         {
           "name": "teamName",
           "type": "varchar",
-          "length": 70
+          "length": 100
         }
       ]
     },
     {
-      "name": "employee",
-      "description": "Stores Employee Data",
+      "name": "Employee",
+      "description": "Stores Employee data",
       "columns": [
         {
-          "name": "empid",
+          "name": "empID",
           "type": "auto",
           "primarykey": true
         },
@@ -37,8 +37,15 @@
         },
         {
           "name": "role",
-          "type": "varchar",
-          "length": 20
+          "type": "long",
+          "foreignkey": {
+            "references": "Role",
+            "column": "RoleID",
+            "constraint": {
+              "condition": "delete",
+              "action": "null"
+            }
+          }
         },
         {
           "name": "gender",
@@ -50,7 +57,7 @@
           "type": "int"
         },
         {
-          "name": "accountno",
+          "name": "accountNo",
           "type": "varchar",
           "length": 40
         },
@@ -66,7 +73,7 @@
           "length": 100
         },
         {
-          "name": "phoneno",
+          "name": "phoneNo",
           "type": "varchar",
           "length": 15
         },
@@ -80,11 +87,90 @@
           "length": 100
         },
         {
-          "name": "managerid",
+          "name": "managerID",
+          "type": "long",
+          "foreignkey": {
+            "references": "Employee",
+            "column": "empID",
+            "constraint": {
+              "condition": "delete",
+              "action": "null"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payroll",
+      "description": "Stores Employee Monthly Salary",
+      "columns": [
+        {
+          "name": "payrollID",
+          "type": "auto",
+          "primarykey": true
+        },
+        {
+          "name": "fromdate",
           "type": "long"
-
+        },
+        {
+          "name": "todate",
+          "type": "long"
+        },
+        {
+          "name": "payrollSalary",
+          "type": "int"
+        },
+        {
+          "name": "empID",
+          "type": "long",
+          "foreignkey": {
+            "references": "Employee",
+            "column": "empID",
+            "constraint": {
+              "condition": "delete",
+              "action": "cascade"
+            }
+          }
         }
       ]
     }
+  ,
+    {
+      "name": "Attendence",
+      "description": "Stores Employee CheckIn and CheckOut",
+      "columns": [
+        {
+          "name": "attendenceID",
+          "type": "auto",
+          "primarykey": true
+        },
+        {
+          "name": "date",
+          "type": "long"
+        },
+        {
+          "name": "checkin",
+          "type": "long"
+        },
+        {
+          "name": "checkout",
+          "type": "long"
+        },
+        {
+          "name": "empID",
+          "type": "long",
+          "foreignkey": {
+            "references": "Employee",
+            "column": "empID",
+            "constraint": {
+              "condition": "delete",
+              "action": "cascade"
+            }
+          }
+        }
+      ]
+    }
+
   ]
 }
